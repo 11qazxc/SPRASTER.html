@@ -14,6 +14,7 @@ You should have received a copy of the GNU General Public License along with thi
     <input type="text" id="pixelSize" value="1" onChange="$('[id=pixelSize]').value=$('[id=pixelSize]').value.replace(/[^0-9\.]/gi,'').padStart(1,'0'); updateLabel()">Size of each pixel in font units (em).<br />
     <input type="text" id="bgColor" value="" onChange="$('[id=bgColor]').value=$('[id=bgColor]').value.replace(/[^0-9A-Fa-f]/gi,'').slice(0,6); updateLabel()">Background i.e. color treated as transparent. 24bit hex without leading hash, e.g. <b>10FF80</b>, may be empty.<br />
     <input type="checkbox" id="disableUl" value="0" onChange="updateLabel()">Disable underlines. Underlines (if this checkbox is not checked) are used for very long sequences of same color. Sometimes small image may be lighter if they're disabled (because of overhead). You also need to check it if you see large gaps or log (or dev console) says "IndexOutOfRangeException" when you save the label.<br />
+    <input type="checkbox" id="disableDashes" value="0" onChange="updateLabel()">Disable dashes. I didn't test it but maybe it'll work.<br />
     <p id="filename"></p><br /><img id="imageTag" style="display:none" /><canvas id="canvas"></canvas><br /><input type="text" id="textoutput"></input><i id="outputSize"></i><br />Output (i.e. code for label) will be in text field above.<br />Note that you must use Military font to get correct results.<br />If you're fine with not-so-correct results and your image is not transparent you can use any font except Roboto (Roboto font has different dash length and gives weird patterns on large images).
 </body>
 <script type="text/javascript">
@@ -84,7 +85,8 @@ function imgLoaded(){
     }
     var pixelSize=parseFloat($("[id=pixelSize]").value)
     var size=pixelSize*10.5;var dashSize=29.5/2;var sDashSize=8+1/4.5
-    const ulMinLen=($("[id=disableUl]").checked?data.data.length:65); const dashMinLen=45;
+    const ulMinLen=($("[id=disableUl]").checked?data.data.length:65);
+    const dashMinLen=($("[id=disableDashes]").checked?data.data.length:45);
     var label="<align=left><mspace="+toStr(pixelSize,1)+"em><line-height="+toStr(pixelSize,1)+"em><size="+toStr(size,1)+"em>";
     var c="";var space=0
     len=count.length-1
