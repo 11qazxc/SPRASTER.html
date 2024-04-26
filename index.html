@@ -40,7 +40,7 @@ function linkChange(){
     updateLabel()}
 
 function colorStr(r,g,b,a){
-    c=hexbyte(r)+hexbyte(g)+hexbyte(b)+(a=255?"":hexbyte(a))//it's very simple idea:don't write alpha if it's equal to default.
+    c=hexbyte(r)+hexbyte(g)+hexbyte(b)+(a==255?"":hexbyte(a))//it's very simple idea:don't write alpha if it's equal to default.
     //why did it took many months for me to think about it?
     if(c.length>=8){return "<#"+((c[1]==c[0]&&c[3]==c[2]&&c[5]==c[4]&&c[7]==c[6])?c[0]+c[2]+c[4]+c[6]:c)+">"}
     else{return "<#"+((c[1]==c[0]&&c[3]==c[2]&&c[5]==c[4])?c[0]+c[2]+c[4]:c)+">"}
